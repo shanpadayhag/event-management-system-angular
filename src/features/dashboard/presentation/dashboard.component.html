@@ -41,11 +41,12 @@
           value: '11',
           label: 'December',
         }]" [selectedOption]="{
-          value: selectedDate.getMonth().toString(),
-          label: format(selectedDate, 'MMMM'),
-        }" [placeholder]="'Select month...'" [searchPlaceholder]="'Search month...'" [className]="'w-[190px]'" />
+          value: _selectedDate.getMonth().toString(),
+          label: format(_selectedDate, 'MMMM'),
+        }" [placeholder]="'Select month...'" [searchPlaceholder]="'Search month...'" (selectOption)="setMonth($event)"
+        [className]="'w-[190px]'" />
 
-      <c-input [value]="selectedDate.getFullYear().toString()" (valueChange)="setYear($event)" [className]="'w-[57px]'"
+      <c-input [value]="_selectedDate.getFullYear().toString()" (valueChange)="setYear($event)" [className]="'w-[57px]'"
         [placeholder]="'Year'" />
 
       <c-button [variant]="'ghost'" [size]="'icon'" (click)="showNextMonth()"><lucide-angular

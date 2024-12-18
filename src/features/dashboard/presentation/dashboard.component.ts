@@ -25,35 +25,42 @@ class DashboardComponent implements AfterViewInit {
   readonly ChevronRight = ChevronRight;
   readonly format = format;
 
-  selectedDate: Date = new Date();
-  eventCalendarApi?: CalendarApi;
+  _selectedDate: Date = new Date();
+  _eventCalendarApi?: CalendarApi;
 
   ngAfterViewInit(): void {
-    this.eventCalendarApi = this.eventCalendarComponent?.fullCalendarComponent?.getApi();
+    this._eventCalendarApi = this.eventCalendarComponent?.fullCalendarComponent?.getApi();
+  }
+
+  set selectedDate(date: Date) {
+    this._selectedDate = date;
+    console.log(this.selectedDate);
   }
 
   showPreviousMonth() {
-    this.selectedDate = subMonths(this.selectedDate, 1);
-    this.eventCalendarApi?.gotoDate(this.selectedDate);
+    this._selectedDate = subMonths(this._selectedDate, 1);
+    this._eventCalendarApi?.gotoDate(this._selectedDate);
   };
 
   showNextMonth() {
-    this.selectedDate = addMonths(this.selectedDate, 1);
-    this.eventCalendarApi?.gotoDate(this.selectedDate);
+    this._selectedDate = addMonths(this._selectedDate, 1);
+    this._eventCalendarApi?.gotoDate(this._selectedDate);
   }
 
-  setMonth(option: ComboboxOption<{ value: number; }>) {
-    if (option.data?.value) {
-      this.selectedDate = setMonth(this.selectedDate, option.data.value);
-      this.eventCalendarApi?.gotoDate(this.selectedDate);
+  setMonth(option: ComboboxOption) {
+    const parsedValue = parseInt(option.value);
+
+    if (parsedValue >= 0 && parsedValue <= 11) {
+      this._selectedDate = setMonth(this._selectedDate, parsedValue);
+      this._eventCalendarApi?.gotoDate(this._selectedDate);
     }
   }
 
   setYear(year: string) {
     _.debounce(() => {
       if (/^\d{4}$/.test(year)) {
-        this.selectedDate = setYear(this.selectedDate, parseInt(year));
-        this.eventCalendarApi?.gotoDate(this.selectedDate);
+        this._selectedDate = setYear(this._selectedDate, parseInt(year));
+        this._eventCalendarApi?.gotoDate(this._selectedDate);
       }
     }, 300)();
   }

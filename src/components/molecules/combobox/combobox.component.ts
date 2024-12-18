@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ButtonComponent } from '../../atoms/button/button.component';
 import { CardComponent } from '../../atoms/card/card.component';
 import { Check, ChevronsUpDown, LucideAngularModule, Search } from 'lucide-angular';
@@ -30,6 +30,7 @@ export class ComboboxComponent implements OnInit {
   @Input() searchPlaceholder: string = '';
   @Input() noOptionsMessage: string = '';
   @Input() className: string = "";
+  @Output() selectOption = new EventEmitter<ComboboxOption>();
 
   readonly ChevronsUpDown = ChevronsUpDown;
   readonly Search = Search;
@@ -54,6 +55,18 @@ export class ComboboxComponent implements OnInit {
 
   _selectOption(option: ComboboxOption) {
     this.selectedOption = this._hoveredOption = option;
+    this.selectOption.emit(option);
     this._open = false;
+  }
+
+  _filterOptions(event: Event) {
+    const labelFilter = (event.target as HTMLInputElement).value.toLowerCase();
+
+    if (!labelFilter)
+      this._options = this.options;
+
+    this._options = this.options.filter(option => {
+      return option.label.toLowerCase().includes(labelFilter);
+    });
   }
 }
