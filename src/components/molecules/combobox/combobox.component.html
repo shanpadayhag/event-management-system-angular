@@ -1,0 +1,24 @@
+<div class="relative w-full">
+  <c-button (click)="toggleButton()" [variant]="'outline'" [className]="_className">
+    {{ selectedOption?.label || placeholder || '' }}
+    <lucide-angular [img]="ChevronsUpDown" class="text-primary-foreground" />
+  </c-button>
+
+  <card [className]="'absolute top-full mt-2 left-0 w-full z-50 bg-background'" *ngIf="_open">
+    <div class="flex items-center border-b px-3">
+      <lucide-angular [img]="Search" class="text-muted-foreground w-4 h-4 mr-2" />
+      <input
+        class="flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
+        [attr.placeholder]="searchPlaceholder" />
+    </div>
+
+    <div class="p-1 flex flex-col gap-1">
+      <div *ngFor="let option of _options" (click)="_selectOption(option)" (mouseover)="_hoveredOption = option"
+        class="relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0"
+        [attr.data-selected]="option.value === _hoveredOption?.value">
+        {{ option.label }}<lucide-angular *ngIf="option.value === selectedOption?.value" [img]="Check"
+          class="text-primary-foreground ml-auto" />
+      </div>
+    </div>
+  </card>
+</div>

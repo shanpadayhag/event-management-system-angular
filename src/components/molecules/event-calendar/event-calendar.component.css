@@ -1,0 +1,40 @@
+.event-calendar {
+  @apply border-[1px] rounded-lg border-secondary p-3 pt-5;
+}
+
+.event-calendar .fc-theme-standard .fc-scrollgrid {
+  @apply border-none;
+}
+
+.event-calendar table {
+  @apply !border-separate;
+}
+
+.event-calendar .fc-col-header-cell.fc-day {
+  @apply font-normal text-sm;
+}
+
+.event-calendar td {
+  @apply p-1 !border-none !bg-transparent;
+}
+
+.event-calendar .fc-daygrid-day-frame.fc-scrollgrid-sync-inner {
+  @apply !border-[1px] !border-secondary rounded-lg p-2;
+}
+
+.event-calendar .fc-theme-standard td,
+.event-calendar .fc-theme-standard th {
+  @apply border-none;
+}
+
+.event-calendar .fc-daygrid-day-top {
+  @apply flex-row;
+}
+
+.fc-daygrid-day-number {
+  @apply text-sm;
+}
+
+.event-calendar .fc-day-today .fc-daygrid-day-top .fc-daygrid-day-number {
+  @apply bg-primary text-secondary-foreground rounded-full h-7 w-7 flex items-center justify-center p-0;
+}

@@ -1,0 +1,57 @@
+<div class="group/sidebar-wrapper flex min-h-svh w-full has-[[data-variant=inset]]:bg-sidebar"
+  style="--sidebar-width: 16rem; --sidebar-width-icon: 3rem;">
+  <div class="group peer hidden md:block text-sidebar-foreground" data-state="collapsed"
+    [attr.data-collapsible]="sidebarState.collapsible" data-variant="inset" data-side="left">
+    <div
+      class="duration-200 relative h-svh w-[--sidebar-width] bg-transparent transition-[width] ease-linear group-data-[collapsible=offcanvas]:w-0 group-data-[side=right]:rotate-180 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]">
+    </div>
+    <div
+      class="duration-200 fixed inset-y-0 z-10 hidden h-svh w-[--sidebar-width] transition-[left,right,width] ease-linear md:flex left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)] p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+2px)]">
+      <div data-sidebar="sidebar"
+        class="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow">
+        <div data-sidebar="header" class="flex flex-col gap-2 p-2">
+          <ul data-sidebar="menu" class="flex w-full min-w-0 flex-col gap-1">
+            <li data-sidebar="menu-item" class="group/menu-item relative"><a href="#" data-sidebar="menu-button"
+                data-size="lg" data-active="false"
+                class="peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 [&>span:last-child]:truncate [&>div>lucide-angular>svg]:size-4 [&>div>lucide-angular>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-12 text-sm group-data-[collapsible=icon]:!p-0">
+                <div
+                  class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                  <lucide-angular [img]="Command" />
+                </div>
+                <div class="grid flex-1 text-left text-sm leading-tight"><span class="truncate font-semibold">EMS</span>
+                </div>
+              </a></li>
+          </ul>
+        </div>
+        <div data-sidebar="content"
+          class="flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden">
+          <div data-sidebar="group" class="relative flex w-full min-w-0 flex-col p-2">
+            <div data-sidebar="group-label"
+              class="duration-200 flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-sidebar-foreground/70 outline-none ring-sidebar-ring transition-[margin,opa] ease-linear focus-visible:ring-2 [&amp;>svg]:size-4 [&amp;>svg]:shrink-0 group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0">
+              Main</div>
+            <ul data-sidebar="menu" class="flex w-full min-w-0 flex-col gap-1">
+              <li data-sidebar="menu-item" class="group/menu-item relative"><a href="#" data-sidebar="menu-button"
+                  data-size="default" data-active="false"
+                  class="peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>lucide-angular>svg]:size-4 [&>lucide-angular>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm">
+                  <lucide-angular [img]="LayoutDashboard" /><span>Dashboard</span>
+                </a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main
+    class="relative flex min-h-svh flex-1 flex-col bg-background peer-data-[variant=inset]:min-h-[calc(100svh-theme(spacing.4))] peer-data-[variant=inset]:max-h-[calc(100svh-theme(spacing.4))] md:peer-data-[variant=inset]:m-2 md:peer-data-[state=collapsed]:peer-data-[variant=inset]:ml-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow overflow-auto">
+    <header class="flex h-16 shrink-0 items-center gap-2">
+      <div class="flex items-center gap-2 px-4"><button (click)="toggleSidebarTrigger()"
+          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-7 w-7 -ml-1"
+          data-sidebar="trigger">
+          <lucide-angular [img]="Sidebar" /><span class="sr-only">Toggle Sidebar</span>
+        </button></div>
+    </header>
+
+    <router-outlet />
+  </main>
+</div>
