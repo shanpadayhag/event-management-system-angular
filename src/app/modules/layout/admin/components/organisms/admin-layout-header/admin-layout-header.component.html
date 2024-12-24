@@ -1,0 +1,13 @@
+<header class="flex h-16 shrink-0 items-center gap-2">
+  <div class="flex items-center gap-2 px-4">
+    <button (click)="this.sidebarService.toggleSidebar()"
+      class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-7 w-7 -ml-1"
+      data-sidebar="trigger">
+      <lucide-angular [img]="Sidebar" /><span class="sr-only">Toggle Sidebar</span>
+    </button>
+
+    <app-separator />
+
+    <p class="text-sm cursor-default">{{ adminLayoutService.breadcrumbs() }}</p>
+  </div>
+</header>

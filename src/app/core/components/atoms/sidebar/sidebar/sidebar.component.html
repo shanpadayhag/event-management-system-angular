@@ -1,0 +1,10 @@
+<div class="group peer hidden md:block text-sidebar-foreground" [attr.data-variant]="this.sidebarService.variant()"
+  [attr.data-state]="this.sidebarService.state()" [attr.data-collapsible]="this.sidebarService.collapsible()">
+  <div
+    class="duration-200 relative h-svh w-[--sidebar-width] bg-transparent transition-[width] ease-linear p-2 group-data-[collapsible=offcanvas]:w-0 group-data-[side=right]:rotate-180 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]">
+    <div
+      class="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

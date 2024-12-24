@@ -1,0 +1,6 @@
+<main class="relative flex h-[calc(100vh-1rem)] flex-col bg-background overflow-auto"
+  [class.md:m-2]="this.sidebarService.variant() === 'inset'" [class.md:ml-0]="this.sidebarService.variant() === 'inset'"
+  [class.md:rounded-xl]="this.sidebarService.variant() === 'inset'"
+  [class.md:shadow]="this.sidebarService.variant() === 'inset'">
+  <ng-content></ng-content>
+</main>

@@ -1,0 +1,4 @@
+<div class="group/sidebar-wrapper flex min-h-svh w-full" [class.bg-sidebar]="this.sidebarService.variant() === 'inset'"
+  [attr.style]="'--sidebar-width: ' + sidebarService.SIDEBAR_WIDTH + '; --sidebar-width-icon: ' + sidebarService.SIDEBAR_WIDTH_ICON + ';'">
+  <ng-content></ng-content>
+</div>

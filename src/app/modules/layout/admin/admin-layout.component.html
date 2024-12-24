@@ -1,0 +1,40 @@
+<app-sidebar-provider>
+  <app-sidebar>
+    <app-sidebar-header>
+      <app-sidebar-menu>
+        <app-sidebar-menu-item>
+          <app-sidebar-menu-button>
+            EMS
+          </app-sidebar-menu-button>
+        </app-sidebar-menu-item>
+      </app-sidebar-menu>
+    </app-sidebar-header>
+
+    <app-sidebar-content>
+      <app-sidebar-group>
+        <app-sidebar-group-label>Main</app-sidebar-group-label>
+        <app-sidebar-menu>
+          <app-sidebar-menu-item>
+            <app-sidebar-menu-button [href]="'/dashboard'">
+              <lucide-angular [img]="LayoutDashboard" class="icon" />
+              <span>Dashboard</span>
+            </app-sidebar-menu-button>
+          </app-sidebar-menu-item>
+
+          <app-sidebar-menu-item>
+            <app-sidebar-menu-button [href]="'/events'">
+              <lucide-angular [img]="CalendarRange" class="icon" />
+              <span>Events</span>
+            </app-sidebar-menu-button>
+          </app-sidebar-menu-item>
+        </app-sidebar-menu>
+      </app-sidebar-group>
+    </app-sidebar-content>
+  </app-sidebar>
+
+  <app-sidebar-inset>
+    <admin-layout-header></admin-layout-header>
+
+    <router-outlet />
+  </app-sidebar-inset>
+</app-sidebar-provider>

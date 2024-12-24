@@ -1,0 +1,33 @@
+<div class="relative w-full">
+  <app-button (click)="toggleDropdown()" [variant]="'outline'" [className]="buttonClassName()">
+    {{ selectedOption?.label || placeholder || '' }}
+    <lucide-angular [img]="Icons.ChevronsUpDown" class="icon text-muted-foreground" />
+  </app-button>
+
+  <app-card [class]="'absolute top-full mt-1 left-0 w-full z-10 rounded-md'" *ngIf="this.isOpen()">
+    <div class="flex items-center border-b px-3">
+      <lucide-angular [img]="Icons.Search" class="mr-2 h-4 w-4 opacity-50" />
+      <app-input (textChangeEvent)="onSearchInput($event)" [class]="'border-none focus-visible:ring-0 pl-0'"
+        [placeholder]="searchPlaceholder" />
+    </div>
+
+    <div class="p-1 flex flex-col gap-1 max-h-[11.5rem] overflow-auto hide-scrollbar">
+      <ng-container *ngIf="this.filteredOptions().length; else noResults">
+        <div *ngFor="let option of this.filteredOptions(); trackBy: trackByValue" (click)="selectValue(option)"
+          (mouseover)="hoveredOption.set(option)"
+          class="relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&>.icon>svg]:pointer-events-none [&>.icon>svg]:size-4 [&>.icon>svg]:shrink-0"
+          role="option" [attr.data-selected]="option.value === hoveredOption()?.value">
+          <lucide-angular [img]="Icons.Check" class="icon mr-2 h-4 w-4"
+            [class.opacity-0]="option.value !== this.selectedOption?.value" />
+          {{option.label}}
+        </div>
+      </ng-container>
+
+      <ng-template #noResults>
+        <div class="px-2 py-1.5 text-sm text-secondary-foreground flex items-center justify-center">
+          {{ emptyOptionsMessage || 'No results found.' }}
+        </div>
+      </ng-template>
+    </div>
+  </app-card>
+</div>
