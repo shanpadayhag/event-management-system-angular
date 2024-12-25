@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { cva, type VariantProps } from "class-variance-authority";
 import { ClassValue } from 'clsx';
 
@@ -37,13 +37,17 @@ const buttonVariants = cva(
   standalone: false,
   templateUrl: 'button.component.html'
 })
-export default class ButtonComponent implements OnChanges {
+export default class ButtonComponent implements OnInit, OnChanges {
   @Input() variant: VariantProps<typeof buttonVariants>['variant'] = "default";
   @Input() size: VariantProps<typeof buttonVariants>['size'] = "default";
   @Input() className?: ClassValue;
   @Output() clickEvent = new EventEmitter<MouseEvent>();
 
   protected buttonClass = '';
+
+  ngOnInit(): void {
+    this.updateButtonClass();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['variant'] || changes['size'] || changes['className']) {

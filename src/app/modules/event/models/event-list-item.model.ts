@@ -3,7 +3,7 @@ export default class EventListItem {
   public title: string;
   public start: Date;
   public end: Date;
-  public color?: string;
+  public color: string;
 
   constructor(data: {
     id: number;
@@ -16,7 +16,7 @@ export default class EventListItem {
     this.title = data.title;
     this.start = data.start;
     this.end = data.end;
-    this.color = data.color;
+    this.color = data.color || 'e11d48';
   }
 
   static fromJson(json: any): EventListItem {
@@ -25,7 +25,7 @@ export default class EventListItem {
       title: json.title,
       start: new Date(json.start),
       end: new Date(json.end),
-      color: json.color,
+      color: json.color || 'e11d48',
     });
   }
 }

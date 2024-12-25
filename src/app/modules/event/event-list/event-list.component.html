@@ -1,0 +1,51 @@
+<div class="flex flex-col px-4 gap-2">
+  <div class="w-full flex justify-between">
+    <div></div>
+    <div>
+      <app-button>New Event</app-button>
+    </div>
+  </div>
+
+  <app-card>
+    <app-card-header>
+      <app-card-title>Event list</app-card-title>
+      <app-card-description>Below is the list of events where you can view and manage.</app-card-description>
+    </app-card-header>
+
+    <app-card-content>
+      <table app-table>
+        <thead app-table-header>
+          <tr app-table-row>
+            <th app-table-head>ID</th>
+            <th app-table-head>Title</th>
+            <th app-table-head>Start</th>
+            <th app-table-head>End</th>
+            <th app-table-head>Color</th>
+            <th app-table-head class="sr-only">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody app-table>
+          <tr app-table-row *ngFor="let event of eventList()">
+            <td app-table-cell>{{ event.id }}</td>
+            <td app-table-cell>{{ event.title }}</td>
+            <td app-table-cell>{{ dateService.formatTimestamp(event.start) }}</td>
+            <td app-table-cell>{{ dateService.formatTimestamp(event.end) }}</td>
+            <td app-table-cell>
+              <div class="flex items-center gap-2">
+                <div [attr.class]="'bg-[#' + event.color + '] w-4 h-4 rounded-sm'"></div>
+                <span class="font-mono">{{ "#" + event.color + "" }}</span>
+              </div>
+            </td>
+            <td app-table-cell>
+              <div class="flex gap-2 py-4">
+                <app-button [variant]="'secondary'">Edit</app-button>
+                <app-button [variant]="'destructive'">Delete</app-button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </app-card-content>
+  </app-card>
+</div>
