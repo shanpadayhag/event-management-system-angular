@@ -10,6 +10,7 @@ import SidebarMenuItemComponent from '@app/core/components/atoms/sidebar/sidebar
 import SidebarProviderComponent from '@app/core/components/atoms/sidebar/sidebar-provider/sidebar-provider.component';
 import { SidebarService } from '@app/core/components/atoms/sidebar/sidebar.service';
 import SidebarMenuButtonComponent from '@app/core/components/atoms/sidebar/sidebar-menu-button/sidebar-menu-button.component';
+import { RouterLink } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import SidebarMenuButtonComponent from '@app/core/components/atoms/sidebar/sideb
     SidebarInsertComponent,
     SidebarProviderComponent,
   ],
-  imports: [],
+  imports: [RouterLink],
   providers: [SidebarService],
   exports: [
     SidebarComponent,
