@@ -1,4 +1,13 @@
-import { AfterViewInit, Component, inject, OnInit, signal, ViewChild, WritableSignal } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  computed,
+  inject,
+  OnDestroy,
+  OnInit,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import ButtonModule from '@app/core/components/atoms/button/button.module';
 import InputModule from '@app/core/components/atoms/input/input.module';
 import ComboboxModule from '@app/core/components/molecules/combobox/combobox.module';
@@ -23,6 +32,7 @@ import { CalendarApi } from '@fullcalendar/core/index.js';
 import EventService from '@app/modules/event/event.service';
 import EventListItem from '@app/modules/event/models/event-list-item.model';
 import AdminLayoutService from '@app/modules/layout/admin/admin-layout.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -35,11 +45,12 @@ import AdminLayoutService from '@app/modules/layout/admin/admin-layout.service';
     EventCalendarModule,
   ],
 })
-export default class DashboardComponent implements OnInit, AfterViewInit {
+export default class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(EventCalendarComponent) eventCalendarComponent?: EventCalendarComponent;
 
   readonly chevronLeft = ChevronLeft;
   readonly chevronRight = ChevronRight;
+
   readonly monthOptions: ComboboxOption[] = [
     { value: '0', label: 'January' },
     { value: '1', label: 'February' },
@@ -58,32 +69,30 @@ export default class DashboardComponent implements OnInit, AfterViewInit {
   private eventService = inject(EventService);
   private adminLayoutService = inject(AdminLayoutService);
 
-  protected selectedDate: WritableSignal<Date> = signal(new Date());
-  protected debouncedSetYear = debounce(this.updateYear, 300);
-  protected eventCalendarApi?: WritableSignal<CalendarApi | null> = signal(null);
-  protected eventList: WritableSignal<EventListItem[]> = signal([]);
+  protected selectedDate = signal(new Date());
+  protected calendarApi: CalendarApi | null = null;
+  private rememberedDates = signal<{ [key: string]: boolean; }>({});
+  protected eventList = signal<EventListItem[]>([]);
+
+  private destroy$ = new Subject<void>();
+  protected debouncedSetYear = debounce((year: string) => this.updateYear(year), 300);
 
   ngOnInit(): void {
-    (async () => {
-      this.adminLayoutService.breadcrumbs.set('Dashboard');
-    })();
-
-    (async () => {
-      const response = this.eventService.fetchEventByMonthAndYear({
-        month: this.selectedDate().getMonth() + 1,
-        year: this.selectedDate().getFullYear(),
-      });
-
-      response.subscribe(value => this.eventList.update(events => [
-        ...events,
-        ...value,
-      ]));
-    })();
+    this.adminLayoutService.breadcrumbs.set('Dashboard');
+    this.loadEvents();
   }
 
   ngAfterViewInit(): void {
-    this.eventCalendarApi?.set(this.eventCalendarComponent?.fullCalendarComponent?.getApi() ?? null);
+    this.calendarApi = this.eventCalendarComponent?.fullCalendarComponent?.getApi() ?? null;
   }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  monthFilter = computed(() => this.selectedDate().getMonth());
+  yearFilter = computed(() => this.selectedDate().getFullYear());
 
   get selectedMonthOption(): ComboboxOption {
     const month = getMonth(this.selectedDate());
@@ -98,43 +107,56 @@ export default class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   navigateToPreviousMonth(): void {
-    this.selectedDate.update((date) => {
-      const newDate = subMonths(date, 1);
-      this.eventCalendarApi?.()?.gotoDate(newDate);
-      return newDate;
-    });
+    this.updateDate(subMonths(this.selectedDate(), 1));
   }
 
   navigateToNextMonth(): void {
-    this.selectedDate.update((date) => {
-      const newDate = addMonths(date, 1);
-      this.eventCalendarApi?.()?.gotoDate(newDate);
-      return newDate;
-    });
+    this.updateDate(addMonths(this.selectedDate(), 1));
   }
 
   updateMonth(option: ComboboxOption): void {
     const monthIndex = parseInt(option.value, 10);
     if (monthIndex >= 0 && monthIndex <= 11) {
-      this.selectedDate.update((date) => {
-        const newDate = setMonth(date, monthIndex);
-        this.eventCalendarApi?.()?.gotoDate(newDate);
-        return newDate;
-      });
+      this.updateDate(setMonth(this.selectedDate(), monthIndex));
     }
   }
 
   updateYear(year: string): void {
     if (/^\d{4}$/.test(year)) {
-      this.selectedDate.update((date) => {
-        const newDate = setYear(date, parseInt(year, 10));
-        this.eventCalendarApi?.()?.gotoDate(newDate);
-        return newDate;
-      });
+      this.updateDate(setYear(this.selectedDate(), parseInt(year, 10)));
     }
   }
 
-  protected formatMonth(date: Date): string {
+  formatMonth(date: Date): string {
     return format(date, 'MMMM');
+  }
+
+  private updateDate(newDate: Date): void {
+    this.selectedDate.set(newDate);
+    this.calendarApi?.gotoDate(newDate);
+    this.loadEvents();
+  }
+
+  private shouldFetchData(month: number, year: number): boolean {
+    return !this.rememberedDates()[`${month}_${year}`];
+  }
+
+  private loadEvents(): void {
+    const monthFilter = this.monthFilter() + 1;
+    const yearFilter = this.yearFilter();
+
+    if (this.shouldFetchData(monthFilter, yearFilter)) {
+      this.eventService.fetchEventsByMonthAndYear({
+        month: monthFilter,
+        year: yearFilter,
+      }).pipe(takeUntil(this.destroy$)).subscribe(events => {
+        this.eventList.update(previousEvents => [...previousEvents, ...events]);
+      });
+
+      this.rememberedDates.update(rememberedDates => {
+        rememberedDates[`${monthFilter}_${yearFilter}`] = true;
+        return rememberedDates;
+      });
+    }
   }
 }

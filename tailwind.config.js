@@ -2,6 +2,9 @@
 module.exports = {
   darkMode: ["class"],
   content: ["./src/**/*.{html,ts}"],
+  safelist: [
+    "bg-[#e11d48]",
+  ],
   theme: {
     extend: {
       colors: {
