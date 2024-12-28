@@ -19,7 +19,7 @@
 }
 
 .event-calendar .fc-daygrid-day-frame.fc-scrollgrid-sync-inner {
-  @apply !border-[1px] !border-secondary rounded-lg h-[9rem];
+  @apply !border-[1px] !border-secondary rounded-lg p-2 h-[9.375rem];
 }
 
 .event-calendar .fc-theme-standard td,
@@ -35,16 +35,12 @@
   @apply text-sm;
 }
 
-.fc-daygrid-day-top {
-  @apply p-2;
-}
-
 .event-calendar .fc-day-today .fc-daygrid-day-top .fc-daygrid-day-number {
   @apply bg-primary text-primary-foreground rounded-full h-7 w-7 flex items-center justify-center p-0;
 }
 
 .fc-daygrid-day-bottom {
-  @apply p-2;
+  @apply pt-2;
 }
 
 .fc-daygrid-more-link.fc-more-link {

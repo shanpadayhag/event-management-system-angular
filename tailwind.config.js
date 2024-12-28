@@ -4,6 +4,10 @@ module.exports = {
   content: ["./src/**/*.{html,ts}"],
   safelist: [
     "bg-[#e11d48]",
+    "bg-[#2761d8]",
+    "bg-[#2eb88a]",
+    "bg-[#af56db]",
+    "bg-[#e88d30]",
   ],
   theme: {
     extend: {

@@ -1,15 +1,12 @@
 <div class="event-calendar">
   <full-calendar [options]="calendarOptions()">
     <ng-template #eventContent let-arg>
-      <div class="px-2 w-full">
-        <div class="w-full rounded-sm flex overflow-hidden">
-          <div [attr.class]="'bg-[#' + arg.event.backgroundColor + '] w-[4px] h-auto'"></div>
-          <div class="bg-secondary w-full px-2 py-2">
-            <p class="text-sm"><b>{{ arg.event.title }}</b></p>
-            <p class="text-xs text-ellipsis truncate">
-              {{dateService.formatDateTimeRange(arg.event.start, arg.event.end)}}
-            </p>
-          </div>
+      <div class="w-full rounded-sm flex overflow-hidden mt-1">
+        <div [attr.class]="'bg-[#' + arg.event.backgroundColor + '] w-full px-2 py-2'">
+          <p class="text-sm font-semibold">{{ arg.event.title }}</p>
+          <p class="text-xs text-ellipsis truncate">
+            {{dateService.formatDateTimeRange(arg.event.start, arg.event.end)}}
+          </p>
         </div>
       </div>
     </ng-template>

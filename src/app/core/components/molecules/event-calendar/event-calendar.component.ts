@@ -29,6 +29,8 @@ export default class EventCalendarComponent implements OnChanges {
     plugins: [dayGridPlugin],
     headerToolbar: false,
     dayMaxEvents: 1,
+    height: '100%',
+    contentHeight: 'auto',
     moreLinkContent: (args) => {
       return `+${args.num} more`;
     },

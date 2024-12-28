@@ -1,0 +1,17 @@
+<ol
+  class="fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px] gap-2">
+  <li *ngFor="let toast of toasts(); let i = index"
+    class="group pointer-events-auto relative flex w-full items-center justify-between space-x-2 overflow-hidden rounded-md p-4 pr-6 shadow-lg transition-all border bg-background text-foreground"
+    [attr.data-swipe-direction]="'right'" style="user-select: none; touch-action: none;">
+
+    <div class="grid gap-1">
+      <div class="text-sm font-semibold">{{ toast.title }}</div>
+      <div class="text-sm opacity-90">{{ toast.description }}</div>
+    </div>
+
+    <button type="button" (click)="removeToast(i)"
+      class="absolute right-1 top-1 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none focus:ring-1 group-hover:opacity-100">
+      <lucide-angular [img]="X" class="h-4 w-4"></lucide-angular>
+    </button>
+  </li>
+</ol>
