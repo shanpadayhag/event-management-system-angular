@@ -27,7 +27,8 @@
               }
             ],
             "styles": [
-              "src/assets/css/tailwind.css"
+              "src/assets/css/tailwind.css",
+              "src/app/core/components/molecules/event-calendar/event-calendar.component.css"
             ],
             "scripts": []
           },
@@ -85,7 +86,8 @@
               }
             ],
             "styles": [
-              "src/assets/css/tailwind.css"
+              "src/assets/css/tailwind.css",
+              "src/app/core/components/molecules/event-calendar/event-calendar.component.css"
             ],
             "scripts": []
           }

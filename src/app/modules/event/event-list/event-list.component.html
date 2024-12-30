@@ -33,8 +33,8 @@
             <td app-table-cell>{{ dateService.formatTimestamp(event.end) }}</td>
             <td app-table-cell>
               <div class="flex items-center gap-2">
-                <div [attr.class]="'bg-[#' + event.color + '] w-4 h-4 rounded-sm'"></div>
-                <span class="font-mono">{{ "#" + event.color + "" }}</span>
+                <div class="w-4 h-4 rounded-sm" [style]="'background-color: ' + event.color"></div>
+                <span class="font-mono">{{ event.color }}</span>
               </div>
             </td>
             <td app-table-cell>

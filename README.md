@@ -59,7 +59,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]](https://raw.githubusercontent.com/shanpadayhag/event-management-system-angular/refs/heads/master/public/images/dashboard_screenshot.png)
 
 Eventify is a simple event management system built using Angular and Tailwind CSS. It provides basic functionalities for managing events, such as creating, viewing, and potentially deleting events. This project serves as a learning experience and a way to showcase my skills in web development with Angular.
 
@@ -125,13 +125,18 @@ Once the application is running, you can access it in your browser. Use the appl
 
 Here's a list of future plans for the project:
 
+- [ ] Responsive design
 - [ ] Customize scrollbar
 - [ ] Add more and improve components
   - [ ] Dialog (Especially for delete confirmation)
+  - [ ] Calendar
+  - [ ] Date picker
+  - [ ] Date time picker
   - [ ] Breadcrumb
   - [ ] Command (To separate the combobox search input into another component for reusability)
   - [ ] Popover (Combobox should use this component, instead of div component positioned below the button)
 - [ ] Add small animations using `tailwindcss-animated` npm package
+- [ ] Add unit and e2e tests
 - [ ] Make own event calendar from scratch (2030 project deadline)
     -  Will make use of this personal calendar package (primarily to showcase the skill)
 
@@ -184,18 +189,18 @@ Here are some resources that were helpful during the development of this project
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/shanpadayhag/event-management-system-angular?style=for-the-badge
-[contributors-url]: https://github.com/shanpadayhag/Best-README-Template/graphs/contributors
+[contributors-url]: https://github.com/shanpadayhag/event-management-system-angular/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/shanpadayhag/event-management-system-angular?style=for-the-badge
-[forks-url]: https://github.com/shanpadayhag/Best-README-Template/network/members
+[forks-url]: https://github.com/shanpadayhag/event-management-system-angular/network/members
 [stars-shield]: https://img.shields.io/github/stars/shanpadayhag/event-management-system-angular?style=for-the-badge
-[stars-url]: https://github.com/shanpadayhag/Best-README-Template/stargazers
+[stars-url]: https://github.com/shanpadayhag/event-management-system-angular/stargazers
 [issues-shield]: https://img.shields.io/github/issues/shanpadayhag/event-management-system-angular?style=for-the-badge
-[issues-url]: https://github.com/shanpadayhag/Best-README-Template/issues
+[issues-url]: https://github.com/shanpadayhag/event-management-system-angular/issues
 [license-shield]: https://img.shields.io/github/license/shanpadayhag/event-management-system-angular?style=for-the-badge
-[license-url]: https://github.com/shanpadayhag/Best-README-Template/blob/master/LICENSE.txt
+[license-url]: https://github.com/shanpadayhag/event-management-system-angular/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/shanpadayhag
-[product-screenshot]: public/screenshot.png
+[product-screenshot]: public/images/dashboard_screenshot.png
 [Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
 [Angular-url]: https://angular.io/
 [tailwindcss.com]: https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white

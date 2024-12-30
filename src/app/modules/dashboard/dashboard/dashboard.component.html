@@ -4,11 +4,11 @@
       <lucide-angular [img]="chevronLeft" class="icon" />
     </app-button>
 
-    <app-combobox [placeholder]="'Select month...'" [searchPlaceholder]="'Search month'" [class]="'w-[200px]'"
+    <app-combobox [placeholder]="'Select month...'" [searchPlaceholder]="'Search month'" [class]="'w-[12.5rem]'"
       [options]="monthOptions" [selectedOption]="selectedMonthOption"
       (selectOption)="updateMonth($event)"></app-combobox>
 
-    <app-input [value]="selectedYear" (textChangeEvent)="debouncedSetYear($event)" [className]="'w-[57px]'"
+    <input app-input [value]="selectedYear" (textChangeEvent)="debouncedSetYear($event)" [className]="'w-[3.75rem]'"
       [placeholder]="'Year'" />
 
     <app-button (click)="navigateToNextMonth()" [size]="'icon'" [variant]="'ghost'">

@@ -146,7 +146,7 @@ export default class DashboardComponent implements OnInit, AfterViewInit, OnDest
     const yearFilter = this.yearFilter();
 
     if (this.shouldFetchData(monthFilter, yearFilter)) {
-      this.eventService.fetchEventsByMonthAndYear({
+      this.eventService.getEventsByMonthAndYear({
         month: monthFilter,
         year: yearFilter,
       }).pipe(takeUntil(this.destroy$)).subscribe(events => {

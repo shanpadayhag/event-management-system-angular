@@ -7,7 +7,7 @@
   <app-card [class]="'absolute top-full mt-1 left-0 w-full z-10 rounded-md'" *ngIf="this.isOpen()">
     <div class="flex items-center border-b px-3">
       <lucide-angular [img]="Icons.Search" class="mr-2 h-4 w-4 opacity-50" />
-      <app-input (textChangeEvent)="onSearchInput($event)" [class]="'border-none focus-visible:ring-0 pl-0'"
+      <input app-input (textChangeEvent)="onSearchInput($event)" [className]="'border-none focus-visible:ring-0 pl-0'"
         [placeholder]="searchPlaceholder" />
     </div>
 

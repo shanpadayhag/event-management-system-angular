@@ -1,0 +1,5 @@
+<div class="relative">
+  <label app-label>{{ label }} <span class="font-semibold text-red-500">{{ (!optional && '*') || null }}</span></label>
+  <app-date-time-picker [placeholder]="placeholder"
+    (changeDateEvent)="changeDateEvent.emit($event)"></app-date-time-picker>
+</div>

@@ -2,7 +2,7 @@
   <full-calendar [options]="calendarOptions()">
     <ng-template #eventContent let-arg>
       <div class="w-full rounded-sm flex overflow-hidden mt-1">
-        <div [attr.class]="'bg-[#' + arg.event.backgroundColor + '] w-full px-2 py-2'">
+        <div class="w-full px-2 py-2" [attr.style]="'background-color: ' + arg.event.backgroundColor">
           <p class="text-sm font-semibold">{{ arg.event.title }}</p>
           <p class="text-xs text-ellipsis truncate">
             {{dateService.formatDateTimeRange(arg.event.start, arg.event.end)}}

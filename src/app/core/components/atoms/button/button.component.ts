@@ -41,6 +41,7 @@ export default class ButtonComponent implements OnInit, OnChanges {
   @Input() variant: VariantProps<typeof buttonVariants>['variant'] = "default";
   @Input() size: VariantProps<typeof buttonVariants>['size'] = "default";
   @Input() className?: ClassValue;
+  @Input() type = "button";
   @Output() clickEvent = new EventEmitter<MouseEvent>();
 
   protected buttonClass = '';

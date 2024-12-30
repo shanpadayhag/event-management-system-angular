@@ -3,9 +3,9 @@
     <app-sidebar-header>
       <app-sidebar-menu>
         <app-sidebar-menu-item>
-          <app-sidebar-menu-button>
+          <a app-sidebar-menu-button>
             EMS
-          </app-sidebar-menu-button>
+          </a>
         </app-sidebar-menu-item>
       </app-sidebar-menu>
     </app-sidebar-header>
@@ -15,17 +15,17 @@
         <app-sidebar-group-label>Main</app-sidebar-group-label>
         <app-sidebar-menu>
           <app-sidebar-menu-item>
-            <app-sidebar-menu-button [href]="'/dashboard'">
+            <a app-sidebar-menu-button [active]="router.url.includes('/dashboard')" [routerLink]="'/dashboard'">
               <lucide-angular [img]="LayoutDashboard" class="icon" />
               <span>Dashboard</span>
-            </app-sidebar-menu-button>
+            </a>
           </app-sidebar-menu-item>
 
           <app-sidebar-menu-item>
-            <app-sidebar-menu-button [href]="'/events'">
+            <a app-sidebar-menu-button [active]="router.url.includes('/events')" [routerLink]="'/events'">
               <lucide-angular [img]="CalendarRange" class="icon" />
               <span>Events</span>
-            </app-sidebar-menu-button>
+            </a>
           </app-sidebar-menu-item>
         </app-sidebar-menu>
       </app-sidebar-group>

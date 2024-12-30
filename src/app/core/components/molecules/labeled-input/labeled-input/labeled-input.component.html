@@ -1,0 +1,3 @@
+<label app-label [className]="'mb-2'">{{ label }} <span class="font-semibold text-red-500">{{ (!optional && '*') || null
+    }}</span></label>
+<input app-input [placeholder]="placeholder" (textChangeEvent)="textChangeEvent.emit($event)" />

@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import DateService from '@app/core/services/date.service';
 import EventListItem from '@app/modules/event/models/event-list-item.model';
 import environment from 'environments/environment';
 import { map, Observable } from 'rxjs';
@@ -9,14 +10,22 @@ type FetchEventsByMonthAndYearParams = {
   year: number;
 };
 
+type StoreEventParams = {
+  title: string;
+  start: Date;
+  end: Date;
+  color: string;
+};
+
 @Injectable({
   providedIn: 'root',
 })
 export default class EventService {
   private http = inject(HttpClient);
+  private dateService = inject(DateService);
   private readonly eventApiURL = `${environment.eventServiceUrl}/api/v1/events`;
 
-  fetchEventsByMonthAndYear(
+  getEventsByMonthAndYear(
     params: FetchEventsByMonthAndYearParams
   ): Observable<EventListItem[]> {
     const httpParams = new HttpParams()
@@ -25,5 +34,14 @@ export default class EventService {
 
     return this.http.get<any[]>(`${this.eventApiURL}`, { params: httpParams })
       .pipe(map((eventsData) => eventsData.map(EventListItem.fromJson)));
+  }
+
+  storeEvent(params: StoreEventParams) {
+    return this.http.post(`${this.eventApiURL}`, {
+      title: params.title,
+      start: this.dateService.sortableFormat(params.start),
+      end: this.dateService.sortableFormat(params.end),
+      color: params.color,
+    }, { headers: { 'Content-Type': 'application/json' } });
   }
 }

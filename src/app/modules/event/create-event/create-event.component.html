@@ -6,7 +6,24 @@
     </app-card-header>
 
     <app-card-content>
+      <form class="grid grid-cols-3 gap-x-4" (submit)="createEvent($event)">
+        <app-labeled-input (textChangeEvent)="newTitle.set($event)" [label]="'Title'"
+          [placeholder]="'Enter event title...'" />
 
+        <app-labeled-date-time-picker (changeDateEvent)="newEventStart.set($event)" [label]="'Event Start'"
+          [placeholder]="'Select event start timestamp...'" />
+
+        <app-labeled-date-time-picker (changeDateEvent)="newEventEnd.set($event)" [label]="'Event End'"
+          [placeholder]="'Select event end timestamp...'" />
+
+        <app-labeled-input (textChangeEvent)="newColor.set($event)" [label]="'Color (Hex Code)'"
+          [placeholder]="'Enter event color...'" [optional]="true" />
+
+        <div class="col-span-3 flex justify-end gap-2 mt-4">
+          <app-button [variant]="'secondary'" [routerLink]="'/events'">Cancel</app-button>
+          <app-button [type]="'submit'">Save</app-button>
+        </div>
+      </form>
     </app-card-content>
   </app-card>
 </div>

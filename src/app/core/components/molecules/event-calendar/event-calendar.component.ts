@@ -15,7 +15,7 @@ export type Event = {
   selector: 'app-event-calendar',
   standalone: false,
   templateUrl: 'event-calendar.component.html',
-  styleUrl: 'event-calendar.component.css',
+  // styleUrl: 'event-calendar.component.css', The use of the css is in angular.json file
   encapsulation: ViewEncapsulation.None,
 })
 export default class EventCalendarComponent implements OnChanges {

@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+.hide-input-date-calendar::-webkit-inner-spin-button,
+.hide-input-date-calendar::-webkit-calendar-picker-indicator {
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
+}
 
 .input-no-spin::-webkit-inner-spin-button,
 .input-no-spin::-webkit-outer-spin-button {

@@ -45,7 +45,7 @@ export default class EventListComponent implements OnInit, OnDestroy {
   }
 
   protected async fetchEvents(): Promise<void> {
-    this.eventService.fetchEventsByMonthAndYear(this.monthYear())
+    this.eventService.getEventsByMonthAndYear(this.monthYear())
       .pipe(takeUntil(this.destroy$))
       .subscribe(this.eventList.set);
   }

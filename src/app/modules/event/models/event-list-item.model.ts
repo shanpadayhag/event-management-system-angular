@@ -25,7 +25,7 @@ export default class EventListItem {
       title: json.title,
       start: new Date(json.start),
       end: new Date(json.end),
-      color: json.color || 'e11d48',
+      color: (json.color || '#e11d48').toUpperCase(),
     });
   }
 }

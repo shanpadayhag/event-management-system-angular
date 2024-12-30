@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import ToastService, { type Toast } from '@app/core/services/toast.service';
 import { X } from 'lucide-angular';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-toaster',
