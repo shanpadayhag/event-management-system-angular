@@ -19,30 +19,39 @@ import AdminLayoutService from '@app/modules/layout/admin/admin-layout.service';
 })
 export default class EditEventComponent implements OnInit {
   private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
   protected router = inject(Router);
   protected adminLayoutService = inject(AdminLayoutService);
   protected toastService = inject(ToastService);
   protected eventService = inject(EventService);
-  private destroyRef = inject(DestroyRef);
 
-  protected eventID = signal(-1);
-  protected newTitle = signal('');
+  protected eventID = signal<number>(-1);
+  protected newTitle = signal<string>('');
   protected newEventStart = signal<Date | null>(null);
   protected newEventEnd = signal<Date | null>(null);
-  protected newColor = signal('');
+  protected newColor = signal<string>('');
 
   ngOnInit(): void {
-    (async () => {
-      this.adminLayoutService.breadcrumbs.set('Events > Create');
-    })();
+    this.adminLayoutService.breadcrumbs.set('Events > Edit');
+    this.initializeEventDetails();
+  }
 
+  private initializeEventDetails(): void {
     this.route.paramMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(params => {
-      this.fetchEventDetails({ id: parseInt(params.get('id') ?? '-1') });
+      const id = parseInt(params.get('id') ?? '-1', 10);
+      if (id > 0) {
+        this.fetchEventDetails(id);
+      } else {
+        this.toastService.addToast({
+          title: 'Invalid Event ID',
+          description: 'Could not find event details.',
+        });
+      }
     });
   }
 
-  fetchEventDetails(params: { id: number; }) {
-    this.eventService.getEventDetails(params).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(event => {
+  private fetchEventDetails(eventID: number): void {
+    this.eventService.getEventDetails({ id: eventID }).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(event => {
       this.eventID.set(event.id);
       this.newTitle.set(event.title);
       this.newEventStart.set(new Date(event.start));
@@ -51,7 +60,7 @@ export default class EditEventComponent implements OnInit {
     });
   }
 
-  editEvent(event: SubmitEvent) {
+  protected editEvent(event: SubmitEvent): void {
     event.preventDefault();
 
     this.eventService.updateEvent({
@@ -60,25 +69,25 @@ export default class EditEventComponent implements OnInit {
       start: this.newEventStart()!,
       end: this.newEventEnd()!,
       color: this.newColor(),
-    }).pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        complete: () => {
-          this.toastService.addToast({
-            title: 'Yay! Event Updated!',
-            description: 'Your event has been successfully updated!',
-          });
+    }).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+      complete: () => this.handleUpdateSuccess(),
+      error: (response) => this.handleUpdateError(response),
+    });
+  }
 
-          this.router.navigate(['/events']);
-        },
-        error: (response) => {
-          let title = "Whoops, Request Didn't Go Through!";
-          let description = Object.values(response.error.errors)[0] as string;
+  private handleUpdateSuccess(): void {
+    this.toastService.addToast({
+      title: 'Yay! Event Updated!',
+      description: 'Your event has been successfully updated!',
+    });
+    this.router.navigate(['/events']);
+  }
 
-          this.toastService.addToast({
-            title: title,
-            description: description,
-          });
-        },
-      });
+  private handleUpdateError(response: any): void {
+    const description = Object.values(response.error?.errors || { error: 'Unknown error occurred' })[0] as string;
+    this.toastService.addToast({
+      title: "Whoops, Request Didn't Go Through!",
+      description,
+    });
   }
 }
