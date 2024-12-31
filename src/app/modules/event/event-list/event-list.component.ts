@@ -1,30 +1,36 @@
-import { NgFor } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit, computed, signal, WritableSignal } from '@angular/core';
+import { NgFor, NgIf } from '@angular/common';
+import { Component, inject, OnInit, computed, signal, WritableSignal, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterLink } from '@angular/router';
 import ButtonModule from '@app/core/components/atoms/button/button.module';
 import CardModule from '@app/core/components/atoms/card/card.module';
+import DialogModule from '@app/core/components/atoms/dialog/dialog.module';
 import TableModule from '@app/core/components/atoms/table/table.module';
 import DateService from '@app/core/services/date.service';
+import ToastService from '@app/core/services/toast.service';
 import EventService from '@app/modules/event/event.service';
 import EventListItem from '@app/modules/event/models/event-list-item.model';
 import AdminLayoutService from '@app/modules/layout/admin/admin-layout.service';
-import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   templateUrl: 'event-list.component.html',
   imports: [
+    NgIf,
     NgFor,
     RouterLink,
     ButtonModule,
     CardModule,
     TableModule,
+    DialogModule,
   ],
 })
-export default class EventListComponent implements OnInit, OnDestroy {
+export default class EventListComponent implements OnInit {
   protected adminLayoutService = inject(AdminLayoutService);
   protected eventService = inject(EventService);
   protected dateService = inject(DateService);
   protected router = inject(Router);
+  protected destroyRef = inject(DestroyRef);
+  protected toastService = inject(ToastService);
   protected eventList: WritableSignal<EventListItem[]> = signal([]);
   protected dateFilter = signal(new Date());
   protected monthYear = computed(() => ({
@@ -32,21 +38,36 @@ export default class EventListComponent implements OnInit, OnDestroy {
     year: this.dateFilter().getFullYear(),
   }));
 
-  private destroy$ = new Subject<void>();
+  protected deleteConfirmationState = signal<"open" | "close">("close");
+  protected selectedEventIDToDelete = signal(-1);
 
   ngOnInit(): void {
     this.adminLayoutService.breadcrumbs.set('Events');
     this.fetchEvents();
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
   protected async fetchEvents(): Promise<void> {
     this.eventService.getEventsByMonthAndYear(this.monthYear())
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(this.eventList.set);
+  }
+
+  onClickDelete(id: number) {
+    this.deleteConfirmationState.set("open");
+    this.selectedEventIDToDelete.set(id);
+  }
+
+  continueDelete() {
+    this.deleteConfirmationState.set("close");
+
+    this.eventService.deleteEvent({ id: this.selectedEventIDToDelete() }).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+      this.toastService.addToast({
+        title: value.title + ' Deleted!',
+        description: 'You did it! The item is gone for good!'
+      });
+
+      this.fetchEvents();
+      this.selectedEventIDToDelete.set(-1);
+    });
   }
 }

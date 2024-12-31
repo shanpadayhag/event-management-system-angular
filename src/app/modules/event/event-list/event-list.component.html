@@ -40,7 +40,7 @@
             <td app-table-cell>
               <div class="flex gap-2 py-4">
                 <app-button [routerLink]="['/events/edit/' + event.id]" [variant]="'secondary'">Edit</app-button>
-                <app-button [variant]="'destructive'">Delete</app-button>
+                <app-button (clickEvent)="onClickDelete(event.id)" [variant]="'destructive'">Delete</app-button>
               </div>
             </td>
           </tr>
@@ -48,4 +48,15 @@
       </table>
     </app-card-content>
   </app-card>
+</div>
+
+<div app-dialog *ngIf="deleteConfirmationState() === 'open'">
+  <div app-dialog-header>
+    <h2 app-dialog-title>Think Twice!</h2>
+    <p app-dialog-description>Are you super sure? Deleting is forever!</p>
+  </div>
+  <div app-dialog-footer>
+    <app-button (clickEvent)="deleteConfirmationState.set('close')" [variant]="'secondary'">Cancel</app-button>
+    <app-button (clickEvent)="continueDelete()">Continue</app-button>
+  </div>
 </div>

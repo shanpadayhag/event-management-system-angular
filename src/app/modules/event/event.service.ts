@@ -70,4 +70,9 @@ export default class EventService {
       color: params.color,
     }, { headers: { 'Content-Type': 'application/json' } });
   }
+
+  deleteEvent(params: GetEventDetailsParams) {
+    return this.http.delete(`${this.eventApiURL}/${params.id}`)
+      .pipe(map(EventListItem.fromJson));
+  }
 }
