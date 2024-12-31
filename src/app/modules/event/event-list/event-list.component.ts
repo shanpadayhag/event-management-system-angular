@@ -25,12 +25,12 @@ import AdminLayoutService from '@app/modules/layout/admin/admin-layout.service';
   ],
 })
 export default class EventListComponent implements OnInit {
-  protected adminLayoutService = inject(AdminLayoutService);
-  protected eventService = inject(EventService);
-  protected dateService = inject(DateService);
-  protected router = inject(Router);
-  protected destroyRef = inject(DestroyRef);
-  protected toastService = inject(ToastService);
+  private readonly adminLayoutService = inject(AdminLayoutService);
+  private readonly eventService = inject(EventService);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly toastService = inject(ToastService);
+  protected readonly dateService = inject(DateService);
+
   protected eventList: WritableSignal<EventListItem[]> = signal([]);
   protected dateFilter = signal(new Date());
   protected monthYear = computed(() => ({
@@ -42,8 +42,12 @@ export default class EventListComponent implements OnInit {
   protected selectedEventIDToDelete = signal(-1);
 
   ngOnInit(): void {
-    this.adminLayoutService.breadcrumbs.set('Events');
+    this.initializeBreadcrumbs();
     this.fetchEvents();
+  }
+
+  private initializeBreadcrumbs(): void {
+    this.adminLayoutService.breadcrumbs.set('Events');
   }
 
   protected async fetchEvents(): Promise<void> {
@@ -52,22 +56,24 @@ export default class EventListComponent implements OnInit {
       .subscribe(this.eventList.set);
   }
 
-  onClickDelete(id: number) {
+  onClickDelete(id: number): void {
     this.deleteConfirmationState.set("open");
     this.selectedEventIDToDelete.set(id);
   }
 
-  continueDelete() {
+  continueDelete(): void {
     this.deleteConfirmationState.set("close");
 
-    this.eventService.deleteEvent({ id: this.selectedEventIDToDelete() }).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
-      this.toastService.addToast({
-        title: value.title + ' Deleted!',
-        description: 'You did it! The item is gone for good!'
-      });
+    this.eventService.deleteEvent({ id: this.selectedEventIDToDelete() })
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(value => {
+        this.toastService.addToast({
+          title: `${value.title} Deleted!`,
+          description: 'You did it! The item is gone for good!'
+        });
 
-      this.fetchEvents();
-      this.selectedEventIDToDelete.set(-1);
-    });
+        this.fetchEvents();
+        this.selectedEventIDToDelete.set(-1);
+      });
   }
 }

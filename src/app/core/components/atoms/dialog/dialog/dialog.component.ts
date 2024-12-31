@@ -12,11 +12,19 @@ export default class DialogComponent implements AfterViewInit, OnDestroy {
   ) { }
 
   ngAfterViewInit() {
+    this.appendToBody();
+  }
+
+  ngOnDestroy() {
+    this.removeFromBody();
+  }
+
+  private appendToBody(): void {
     const body = document.body;
     if (body) this.renderer.appendChild(body, this.element.nativeElement);
   }
 
-  ngOnDestroy() {
+  private removeFromBody(): void {
     const body = document.body;
     if (body) this.renderer.removeChild(body, this.element.nativeElement);
   }
