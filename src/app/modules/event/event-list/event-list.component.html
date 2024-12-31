@@ -39,7 +39,7 @@
             </td>
             <td app-table-cell>
               <div class="flex gap-2 py-4">
-                <app-button [variant]="'secondary'">Edit</app-button>
+                <app-button [routerLink]="['/events/edit/' + event.id]" [variant]="'secondary'">Edit</app-button>
                 <app-button [variant]="'destructive'">Delete</app-button>
               </div>
             </td>

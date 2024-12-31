@@ -17,6 +17,18 @@ type StoreEventParams = {
   color: string;
 };
 
+type GetEventDetailsParams = {
+  id: number;
+};
+
+type UpdateEventParams = {
+  id: number;
+  title: string;
+  start: Date;
+  end: Date;
+  color: string;
+};
+
 @Injectable({
   providedIn: 'root',
 })
@@ -38,6 +50,20 @@ export default class EventService {
 
   storeEvent(params: StoreEventParams) {
     return this.http.post(`${this.eventApiURL}`, {
+      title: params.title,
+      start: this.dateService.sortableFormat(params.start),
+      end: this.dateService.sortableFormat(params.end),
+      color: params.color,
+    }, { headers: { 'Content-Type': 'application/json' } });
+  }
+
+  getEventDetails(params: GetEventDetailsParams) {
+    return this.http.get(`${this.eventApiURL}/${params.id}`)
+      .pipe(map(EventListItem.fromJson));
+  }
+
+  updateEvent(params: UpdateEventParams) {
+    return this.http.put(`${this.eventApiURL}/${params.id}`, {
       title: params.title,
       start: this.dateService.sortableFormat(params.start),
       end: this.dateService.sortableFormat(params.end),

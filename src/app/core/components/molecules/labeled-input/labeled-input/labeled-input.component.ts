@@ -7,6 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   host: { class: 'h-auto' }
 })
 export default class LabeledInputComponent {
+  @Input() value = '';
   @Input() label = '';
   @Input() placeholder = '';
   @Input() optional = false;

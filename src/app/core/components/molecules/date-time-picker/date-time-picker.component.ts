@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import DateService from '@app/core/services/date.service';
 import { Calendar } from 'lucide-angular';
 
 @Component({
@@ -10,8 +11,11 @@ import { Calendar } from 'lucide-angular';
 export default class DateTimePickerComponent {
   protected readonly Calendar = Calendar;
 
+  @Input() value?: Date | null;
   @Input() placeholder = '';
   @Output() changeDateEvent = new EventEmitter<Date>();
+
+  protected dateService = inject(DateService);
 
   onClickHandler(event: MouseEvent) {
     const inputElement = event.target as HTMLInputElement;

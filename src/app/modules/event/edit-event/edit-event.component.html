@@ -1,0 +1,29 @@
+<div class="px-4">
+  <app-card>
+    <app-card-header>
+      <app-card-title>Edit existing event</app-card-title>
+      <app-card-description>Enter the details of the event and click update.</app-card-description>
+    </app-card-header>
+
+    <app-card-content>
+      <form class="grid grid-cols-3 gap-x-4" (submit)="editEvent($event)">
+        <app-labeled-input [value]="newTitle()" (textChangeEvent)="newTitle.set($event)" [label]="'Title'"
+          [placeholder]="'Enter event title...'" />
+
+        <app-labeled-date-time-picker [value]="newEventStart()" (changeDateEvent)="newEventStart.set($event)"
+          [label]="'Event Start'" [placeholder]="'Select event start timestamp...'" />
+
+        <app-labeled-date-time-picker [value]="newEventEnd()" (changeDateEvent)="newEventEnd.set($event)"
+          [label]="'Event End'" [placeholder]="'Select event end timestamp...'" />
+
+        <app-labeled-input [value]="newColor()" (textChangeEvent)="newColor.set($event)" [label]="'Color (Hex Code)'"
+          [placeholder]="'Enter event color...'" [optional]="true" />
+
+        <div class="col-span-3 flex justify-end gap-2 mt-4">
+          <app-button [variant]="'secondary'" [routerLink]="'/events'">Cancel</app-button>
+          <app-button [type]="'submit'">Update</app-button>
+        </div>
+      </form>
+    </app-card-content>
+  </app-card>
+</div>

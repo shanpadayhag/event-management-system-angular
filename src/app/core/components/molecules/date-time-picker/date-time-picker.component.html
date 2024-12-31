@@ -1,5 +1,6 @@
 <div class="relative flex w-full">
   <lucide-angular [img]="Calendar" class="w-4 h-4 absolute self-center left-2"></lucide-angular>
-  <input type="datetime-local" [placeholder]="placeholder" (click)="onClickHandler($event)"
+  <input [value]="value && dateService.sortableFormat(value)" type="datetime-local" [placeholder]="placeholder"
+    (click)="onClickHandler($event)"
     class="hide-input-date-calendar pl-10 flex-1 gap-2 whitespace-nowrap rounded-md text-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 w-[240px] justify-start text-left font-normal text-muted-foreground" />
 </div>
