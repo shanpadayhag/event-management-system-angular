@@ -35,7 +35,7 @@ type UpdateEventParams = {
 export default class EventService {
   private http = inject(HttpClient);
   private dateService = inject(DateService);
-  private readonly eventApiURL = `${environment.eventServiceUrl}/api/v1/events`;
+  private readonly eventApiURL = `${environment.eventServiceUrl}/api/event-service/v1`;
 
   getEventsByMonthAndYear(
     params: FetchEventsByMonthAndYearParams
@@ -44,12 +44,12 @@ export default class EventService {
       .set('month', params.month)
       .set('year', params.year);
 
-    return this.http.get<any[]>(`${this.eventApiURL}`, { params: httpParams })
+    return this.http.get<any[]>(`${this.eventApiURL}/events`, { params: httpParams })
       .pipe(map((eventsData) => eventsData.map(EventListItem.fromJson)));
   }
 
   storeEvent(params: StoreEventParams) {
-    return this.http.post(`${this.eventApiURL}`, {
+    return this.http.post(`${this.eventApiURL}/events`, {
       title: params.title,
       start: this.dateService.sortableFormat(params.start),
       end: this.dateService.sortableFormat(params.end),
@@ -58,12 +58,12 @@ export default class EventService {
   }
 
   getEventDetails(params: GetEventDetailsParams) {
-    return this.http.get(`${this.eventApiURL}/${params.id}`)
+    return this.http.get(`${this.eventApiURL}/events/${params.id}`)
       .pipe(map(EventListItem.fromJson));
   }
 
   updateEvent(params: UpdateEventParams) {
-    return this.http.put(`${this.eventApiURL}/${params.id}`, {
+    return this.http.put(`${this.eventApiURL}/events/${params.id}`, {
       title: params.title,
       start: this.dateService.sortableFormat(params.start),
       end: this.dateService.sortableFormat(params.end),

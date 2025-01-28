@@ -52,5 +52,5 @@
 }
 
 .fc-more-popover {
-  @apply hidden;
+  visibility: hidden;
 }
